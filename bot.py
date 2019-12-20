@@ -2,6 +2,9 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import Bot
 import random
+from webserver import keep_alive
+import os
+
 
 client = commands.Bot(command_prefix=".s ")
 
@@ -52,4 +55,4 @@ async def stop_bot(ctx):
 
 
 
-client.run('NjU2OTM3NTU3MDk0ODI2MDE0.Xf1JMw.5WbBp7yozPUDo9cL2tp5YDaIglw')
+client.run()
