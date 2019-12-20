@@ -41,7 +41,7 @@ async def stop_bot(ctx):
     This completely stop the bot.
     No argument required but being the developer is required :)
     """
-    if ctx.message.user.id == 332082083604463616:
+    if ctx.message.author.id == 332082083604463616:
         await ctx.send("The Snom is going to sleep.")
         client.close()
 
