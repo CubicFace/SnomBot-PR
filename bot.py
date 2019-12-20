@@ -46,7 +46,7 @@ async def stop_bot(ctx):
     """
     if ctx.message.author.id == 332082083604463616:
         await ctx.send("The Snom is going to sleep.")
-        client.close()
+        await client.close()
 
 
 
