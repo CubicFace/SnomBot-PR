@@ -54,5 +54,5 @@ async def stop_bot(ctx):
 
 
 
-
-client.run()
+TOKEN=os.environ.get("DISCORD_BOT_SECRET")
+client.run(TOKEN)
