@@ -37,6 +37,14 @@ async def ping(ctx):
     """
     await ctx.send(f'The snom has Pong! ({client.latency * 1000}ms)')
 
+@client.command()
+async def hi(ctx):
+  """
+  Say 'Hi' to the Snom.
+  No arguments required.
+  """
+  sentences=['OwO','UwU',":3","^_^",'*Hiii!*']
+  await ctx.send(random.choice(sentences))
 
 @client.command(name="stop")
 async def stop_bot(ctx):
