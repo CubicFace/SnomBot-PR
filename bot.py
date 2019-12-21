@@ -2,8 +2,7 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import Bot
 import random
-import traceback
-import sys
+from math import *
 from webserver import keep_alive
 import os
 
@@ -56,19 +55,28 @@ async def hi(ctx):
   print(f"[INFO][COMMAND]'hi' command by {ctx.message.author.name}. Chosen sentence: '{chosed_sentence}'")
   await ctx.send(chosed_sentence)
 
-@client.command(name="python", brief="The Snom will execute Python commands!")
+@client.command(name="python", brief="[DEV]The Snom will execute Python commands!")
 async def remote_command(ctx, *,cmd=None):
-    try:
-        if cmd != None:
-            await ctx.send(f"""```py
+    """
+    The Snom will execute Python commands!
+    Arguments:
+    <cmd>: any Python command
+    Being the developer is required! :)
+    """
+    if ctx.message.author.id == 332082083604463616:
+        try:
+            if cmd != None:
+                await ctx.send(f"""```py
 {eval(cmd)}
 ```""")
-        if cmd is None:
-            await ctx.send("The Snom can't execute nothing, please give him something to execute.")
-    except:
-        await ctx.send("The Snom got an error!\nAlso, you can't define variables.")
+            if cmd is None:
+                await ctx.send("The Snom can't execute nothing, please give him something to execute.")
+        except:
+            await ctx.send("The command you were trying to execute got an error!\nAlso, you can't use functions such as defining variables, `import` and stuff like that.")
+    else:
+        await ctx.send("You are not the developer! Intruder!")
 
-@client.command(name="stop", brief="This completely stop the bot.")
+@client.command(name="stop", brief="[DEV]This completely stop the bot.")
 async def stop_bot(ctx):
     """
     This completely stop the bot.
@@ -77,6 +85,8 @@ async def stop_bot(ctx):
     if ctx.message.author.id == 332082083604463616:
         await ctx.send("The Snom is going to sleep.")
         await client.close()
+    else:
+        await ctx.send("You are not the developer! Intruder!")
 
 
 
