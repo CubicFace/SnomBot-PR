@@ -2,7 +2,8 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import Bot
 import random
-
+import traceback
+import sys
 from webserver import keep_alive
 import os
 
@@ -54,6 +55,28 @@ async def hi(ctx):
   chosed_sentence=random.choice(sentences)
   print(f"[INFO][COMMAND]'hi' command by {ctx.message.author.name}. Chosen sentence: '{chosed_sentence}'")
   await ctx.send(chosed_sentence)
+
+@client.command(name="python", brief="The Snom will execute Python commands!")
+async def remote_command(ctx, *,cmd=None):
+    try:
+        if cmd != None:
+            await ctx.send(f"""```py
+            {eval(cmd)}
+            ```""")
+        if "CLOSE" in cmd.upper():
+            raise ValueError("Are you foolish? Do you want the Snom to die?")
+    except Exception:
+        try:
+            exc_info=sys.exc_info()
+            try:
+                raise SyntaxError("raised")
+            except:
+                pass
+        finally:
+            await ctx.send(f"""```py
+            {traceback.print_exception(*exc_info)}
+            ```""")
+            del exc_info
 
 @client.command(name="stop", brief="This completely stop the bot.")
 async def stop_bot(ctx):
