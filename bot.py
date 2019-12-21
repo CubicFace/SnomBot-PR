@@ -63,4 +63,4 @@ async def stop_bot(ctx):
 
 
 keep_alive()
-client.run('NjU2OTM3NTU3MDk0ODI2MDE0.Xf4xJw.5-LWHGBB9-YehOl9502v03sH6Mws')
+client.run('NjU2OTM3NTU3MDk0ODI2MDE0.Xf4xJw.5-LWHGBB9-YehOl9502v03sH6Mw')
