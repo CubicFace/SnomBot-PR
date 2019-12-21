@@ -76,7 +76,7 @@ async def remote_command(ctx, *,cmd=None):
     <cmd>: any Python command
     Being the developer is required! :)
     """
-    if ctx.message.author.id == client:
+    if ctx.message.author.id == client.owner_id:
         try:
             if cmd != None:
                 await ctx.send(f"""```py
