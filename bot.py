@@ -26,7 +26,7 @@ async def on_member_remove(member):
 async def help(ctx, cmd=None):
     embed=discord.Embed(colour=discord.Colour(0xbfcdff), title="Help")
     for command in ctx.bot.commands:
-        embed.add_field(name="Command", value=f".s {command}: {help}", inline=True)
+        embed.add_field(name="Command", value=f".s {command}: {command.brief}", inline=True)
     await ctx.send(embed=embed)
 
 @client.command()
