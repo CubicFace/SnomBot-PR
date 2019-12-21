@@ -7,10 +7,12 @@ from webserver import keep_alive
 import os
 
 
-client = commands.Bot(command_prefix=".s ")
+client = commands.Bot(command_prefix=".s ", owner_id=332082083604463616)
 
 client.remove_command('help')
 
+welcome=client.get_channel(656176795128692739)
+bot_chnl=client.get_channl(658069670469042206)
 @client.event
 async def on_ready():
     print("[INFO] On.")
@@ -19,14 +21,17 @@ async def on_ready():
     User ID: {client.user.id}
     Name: {client.user.name}
     """)
+    await bot_chnl.send("The Snom is connected! <:NATSUKISPARKLE:656602806974808074>")
 
 @client.event
 async def on_member_join(member):
-    print(f'[INFO] {member} joined.')
+    print(f'[INFO] {member} joined. ({member.id})')
+    await welcome.send(f"<@!{member.id}> <:NATSUKISPARKLE:656602806974808074> Welcome to __**SnomMania!**__ <:OwO:656758711444045835>")
 
 @client.event
 async def on_member_remove(member):
-    print(f'[INFO] {member} left.')
+    print(f'[INFO] {member} left. ({member.id})')
+    await welcome.send(f'{member} left the server... <:ZEROTWOCRY:656860514902867988>')
 
 @client.command(name="help", brief="The Snom is here to help.")
 async def help(ctx, cmd=None):
@@ -51,7 +56,14 @@ async def hi(ctx):
   Say 'Hi' to the Snom.
   No arguments required.
   """
-  sentences=['OwO','UwU',":3","^_^",'*Hiii!*']
+  sentences=['OwO',
+  'UwU',
+  ":3",
+  "^_^",
+  '*Hiii!*',
+  "<@!401686680580521984> patate",
+  "am bean baby .3.",
+  "hewo gimme cuwy"]
   chosed_sentence=random.choice(sentences)
   print(f"[INFO][COMMAND]'hi' command by {ctx.message.author.name}. Chosen sentence: '{chosed_sentence}'")
   await ctx.send(chosed_sentence)
@@ -64,7 +76,7 @@ async def remote_command(ctx, *,cmd=None):
     <cmd>: any Python command
     Being the developer is required! :)
     """
-    if ctx.message.author.id == 332082083604463616:
+    if ctx.message.author.id == client:
         try:
             if cmd != None:
                 await ctx.send(f"""```py
@@ -75,7 +87,7 @@ async def remote_command(ctx, *,cmd=None):
         except:
             await ctx.send("The command you were trying to execute got an error!\nAlso, you can't use functions such as defining variables, `import` and stuff like that.")
     else:
-        await ctx.send("You are not the developer! Intruder!")
+        await ctx.send("You are not the developer! Intruder! <:ANGWYSNOM:656753233968234516>")
 
 @client.command(brief="Yummy waffles...")
 async def waffle(ctx):
@@ -93,11 +105,11 @@ async def stop_bot(ctx):
     This completely stop the bot.
     No argument required but being the developer is required :)
     """
-    if ctx.message.author.id == 332082083604463616:
+    if ctx.message.author.id == client.owner_id:
         await ctx.send("The Snom is going to sleep.")
         await client.close()
     else:
-        await ctx.send("You are not the developer! Intruder!")
+        await ctx.send("You are not the developer! Intruder! <:ANGWYSNOM:656753233968234516>")
 
 
 
