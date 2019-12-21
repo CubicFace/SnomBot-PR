@@ -41,7 +41,7 @@ async def ping(ctx):
     Ask the ping, and the Snom will pong! (in ms)
     No arguments required.
     """
-    print(f"[INFO][COMMAND]Ping by {ctx.message.author.name}. Actuall bot latency: {client.latency * 1000} ms.")
+    print(f"[INFO][COMMAND]Ping by {ctx.message.author.name}. Actual bot latency: {client.latency * 1000} ms.")
     await ctx.send(f'The snom has Pong! ({round(client.latency * 1000,2)} ms)')
 
 @client.command(brief="Say 'Hi' to the Snom.")
@@ -51,7 +51,7 @@ async def hi(ctx):
   No arguments required.
   """
   sentences=['OwO','UwU',":3","^_^",'*Hiii!*']
-  chosed_sentence=randoms.choice(sentences)
+  chosed_sentence=random.choice(sentences)
   print(f"[INFO][COMMAND]'hi' command by {ctx.message.author.name}. Chosen sentence: '{chosed_sentence}'")
   await ctx.send(chosed_sentence)
 
