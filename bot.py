@@ -14,6 +14,11 @@ client.remove_command('help')
 @client.event
 async def on_ready():
     print("[INFO] On.")
+    print(f"""
+    [INFO] Bot info:
+    User ID: {client.user.id}
+    Name: {client.user.name}
+    """)
 
 @client.event
 async def on_member_join(member):
@@ -23,31 +28,34 @@ async def on_member_join(member):
 async def on_member_remove(member):
     print(f'[INFO] {member} left.')
 
-@client.command(name="help", description="The Snom is here to help.")
+@client.command(name="help", brief="The Snom is here to help.")
 async def help(ctx, cmd=None):
     embed=discord.Embed(colour=discord.Colour(0xbfcdff), title="Help")
     for command in ctx.bot.commands:
-        embed.add_field(name="Command", value=f".s {command}: {command.help}", inline=True)
+        embed.add_field(name="Command", value=f".s {command}: {command.brief}", inline=True)
     await ctx.send(embed=embed)
 
-@client.command()
+@client.command(brief="Ask the ping, and the Snom will pong! (in ms)")
 async def ping(ctx):
     """
     Ask the ping, and the Snom will pong! (in ms)
     No arguments required.
     """
-    await ctx.send(f'The snom has Pong! ({client.latency * 1000}ms)')
+    print(f"[INFO][COMMAND]Ping by {ctx.message.author.name}. Actuall bot latency: {client.lat* * 1000} ms.")
+    await ctx.send(f'The snom has Pong! ({round(client.latency * 1000,2)} ms)')
 
-@client.command()
+@client.command(brief="Say 'Hi' to the Snom.")
 async def hi(ctx):
   """
   Say 'Hi' to the Snom.
   No arguments required.
   """
   sentences=['OwO','UwU',":3","^_^",'*Hiii!*']
-  await ctx.send(random.choice(sentences))
+  chosed_sentence=randoms.choice(sentences)
+  print(f"[INFO][COMMAND]'hi' command by {ctx.message.author.name}. Chosen sentence: '{chosed_sentence}'")
+  await ctx.send(chosed_sentence)
 
-@client.command(name="stop")
+@client.command(name="stop", brief="This completely stop the bot.")
 async def stop_bot(ctx):
     """
     This completely stop the bot.
