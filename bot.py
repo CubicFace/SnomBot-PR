@@ -11,8 +11,8 @@ client = commands.Bot(command_prefix=".s ", owner_id=332082083604463616)
 
 client.remove_command('help')
 
-welcome=client.get_channel(656176795128692739)
-bot_chnl=client.get_channel(658069670469042206)
+welcome=discord.Object(656176795128692739)
+bot_chnl=discord.Object(658069670469042206)
 @client.event
 async def on_ready():
     print("[INFO] On.")
