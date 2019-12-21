@@ -29,13 +29,13 @@ async def on_ready():
 async def on_member_join(member):
     print(f'[INFO] {member} joined. ({member.id})')
     channel=client.get_channel(welcome_id)
-    await welcome.send(f"<@!{member.id}> <:NATSUKISPARKLE:656602806974808074> Welcome to __**SnomMania!**__ <:OwO:656758711444045835>")
+    await channel.send(f"<@!{member.id}> <:NATSUKISPARKLE:656602806974808074> Welcome to __**SnomMania!**__ <:OwO:656758711444045835>")
 
 @client.event
 async def on_member_remove(member):
     print(f'[INFO] {member} left. ({member.id})')
     channel=client.get_channel(welcome_id)
-    await welcome.send(f'{member} left the server... <:ZEROTWOCRY:656860514902867988>')
+    await channel.send(f'{member} left the server... <:ZEROTWOCRY:656860514902867988>')
 
 @client.command(name="help", brief="The Snom is here to help.")
 async def help(ctx, cmd=None):
