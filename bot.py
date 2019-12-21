@@ -63,20 +63,10 @@ async def remote_command(ctx, *,cmd=None):
             await ctx.send(f"""```py
 {eval(cmd)}
 ```""")
-        if "CLOSE" in cmd.upper():
-            raise ValueError("Are you foolish? Do you want the Snom to die?")
-    except Exception:
-        try:
-            exc_info=sys.exc_info()
-            try:
-                raise SyntaxError("raised")
-            except:
-                pass
-        finally:
-            await ctx.send(f"""```py
-{traceback.print_exception(*exc_info)}
-```""")
-            del exc_info
+        if cmd is None:
+            await ctx.send("The Snom can't execute nothing, please give him something to execute.")
+    except:
+        await ctx.send("The Snom got an error!\nAlso, you can't define variables.")
 
 @client.command(name="stop", brief="This completely stop the bot.")
 async def stop_bot(ctx):
