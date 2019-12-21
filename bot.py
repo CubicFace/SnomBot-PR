@@ -30,9 +30,10 @@ async def on_member_remove(member):
 
 @client.command(name="help", brief="The Snom is here to help.")
 async def help(ctx, cmd=None):
-    embed=discord.Embed(colour=discord.Colour(0xbfcdff), title="Help")
+    embed=discord.Embed(colour=discord.Colour(0xbfcdff), title="Help", description="Here's the list of available commands.")
     for command in ctx.bot.commands:
-        embed.add_field(name="Command", value=f".s {command}: {command.brief}", inline=True)
+        embed.add_field(name=f"{command}", value=f"{command.brief}", inline=True)
+    embed.set_footer(text=f"The command prefix is {client.command_prefix}")
     await ctx.send(embed=embed)
 
 @client.command(brief="Ask the ping, and the Snom will pong! (in ms)")
