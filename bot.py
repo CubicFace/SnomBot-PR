@@ -21,7 +21,7 @@ async def on_ready():
     User ID: {client.user.id}
     Name: {client.user.name}
     """)
-    await bot_chnl.send("The Snom is connected! <:NATSUKISPARKLE:656602806974808074>")
+    await client.send("The Snom is connected! <:NATSUKISPARKLE:656602806974808074>", channel=bot_chnl)
 
 @client.event
 async def on_member_join(member):
