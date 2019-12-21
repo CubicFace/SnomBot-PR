@@ -11,7 +11,7 @@ client = commands.Bot(command_prefix=".s ", owner_id=332082083604463616)
 
 client.remove_command('help')
 guild_id=656176795128692736
-welcome=656176795128692739
+welcome_id=656176795128692739
 bot_chnl_id=658069670469042206
 
 @client.event
@@ -28,11 +28,13 @@ async def on_ready():
 @client.event
 async def on_member_join(member):
     print(f'[INFO] {member} joined. ({member.id})')
+    channel=client.get_channel(welcome_id)
     await welcome.send(f"<@!{member.id}> <:NATSUKISPARKLE:656602806974808074> Welcome to __**SnomMania!**__ <:OwO:656758711444045835>")
 
 @client.event
 async def on_member_remove(member):
     print(f'[INFO] {member} left. ({member.id})')
+    channel=client.get_channel(welcome_id)
     await welcome.send(f'{member} left the server... <:ZEROTWOCRY:656860514902867988>')
 
 @client.command(name="help", brief="The Snom is here to help.")
