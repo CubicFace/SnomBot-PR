@@ -77,6 +77,15 @@ async def remote_command(ctx, *,cmd=None):
     else:
         await ctx.send("You are not the developer! Intruder!")
 
+@client.command(brief="Yummy waffles...")
+async def waffle(ctx):
+    """
+    Yummy waffles...
+    Call this command and the Snom will send Waffle pics.
+    No arguments required.
+    """
+    await ctx.send("",file=f"wafflePics/waffle{random(1,10)}.jpg")
+
 @client.command(name="stop", brief="[DEV]This completely stop the bot.")
 async def stop_bot(ctx):
     """
