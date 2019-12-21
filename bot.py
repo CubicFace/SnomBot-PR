@@ -84,7 +84,7 @@ async def waffle(ctx):
     Call this command and the Snom will send Waffle pics.
     No arguments required.
     """
-    await ctx.send("",file=f"wafflePics/waffle{random(1,10)}.jpg")
+    await ctx.send("",file=discord.File(f"wafflePics/waffle{random(1,10)}.jpg"))
 
 @client.command(name="stop", brief="[DEV]This completely stop the bot.")
 async def stop_bot(ctx):
