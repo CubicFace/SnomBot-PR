@@ -11,8 +11,8 @@ client = commands.Bot(command_prefix=".s ", owner_id=332082083604463616)
 
 client.remove_command('help')
 
-welcome=discord.Object(656176795128692739)
-bot_chnl=discord.Object(658069670469042206)
+welcome=discord.Object(id='656176795128692739')
+bot_chnl=discord.Object(id='658069670469042206')
 @client.event
 async def on_ready():
     print("[INFO] On.")
@@ -21,7 +21,7 @@ async def on_ready():
     User ID: {client.user.id}
     Name: {client.user.name}
     """)
-    await client.send("The Snom is connected! <:NATSUKISPARKLE:656602806974808074>", channel=bot_chnl)
+    await client.send_message(bot_chnl,"The Snom is connected! <:NATSUKISPARKLE:656602806974808074>")
 
 @client.event
 async def on_member_join(member):
