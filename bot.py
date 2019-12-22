@@ -167,7 +167,7 @@ async def naughty(ctx):
 async def stop_bot(ctx):
     f"""
     This completely stop the bot.
-    By closing the connection, <@!{client.owner.id}> will need to restart the host to make the bot start again.
+    By closing the connection, <@!{client.owner_id}> will need to restart the host to make the bot start again.
     """
     if ctx.message.author.id == client.owner_id:
         await ctx.send("The Snom is going to sleep.")
