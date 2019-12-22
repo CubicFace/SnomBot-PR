@@ -31,15 +31,21 @@ Version: {bot_json['version']}
 User ID: {client.user.id}
 Name: {client.user.name}""")
     await client.change_presence(status=discord.Status.idle, activity=discord.Game("Connected."))
+    
     channel=client.get_channel(bot_chnl_id)
+    
     await channel.send(f"The Snom is connected! <:NATSUKISPARKLE:656602806974808074>\n*SnomBot {bot_json['version']}*")
     await client.change_presence(status=discord.Status.online, activity=discord.Game("with snow UwU."))
+    
 
 @client.event
 async def on_member_join(member):
     print(f'[INFO] {member} joined. ({member.id})')
     channel=client.get_channel(welcome_id)
+    Guild=get_guild(guild_id)
+    role=Guild.get_role(656177104861528064)
     await channel.send(f"<@!{member.id}> <:NATSUKISPARKLE:656602806974808074> Welcome to __**SnomMania!**__ <:OwO:656758711444045835>")
+    await client.add_roles(member, role)
 
 @client.event
 async def on_member_remove(member):
