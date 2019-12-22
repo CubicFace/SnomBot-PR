@@ -17,6 +17,7 @@ bot_chnl_id=658069670469042206
 
 @client.event
 async def on_ready():
+    await client.change_presence(status=discord.Status.dnd, activity=discord.Game("on_ready()"))
     print("[INFO] On.")
     print(f"""
     [INFO] Bot info:
@@ -26,7 +27,7 @@ async def on_ready():
     await client.change_presence(status=discord.Status.idle, activity=discord.Game("Connected."))
     channel=client.get_channel(bot_chnl_id)
     await channel.send("The Snom is connected! <:NATSUKISPARKLE:656602806974808074>")
-    await client.change_presence(status=discord.Status.idle, activity=discord.Game("with snow UwU."))
+    await client.change_presence(status=discord.Status.online, activity=discord.Game("with snow UwU."))
 
 @client.event
 async def on_member_join(member):
@@ -116,7 +117,7 @@ async def guild(ctx, attribute=None):
         embed.add_field(name="Name", value=guild.name, inline=True)
         embed.add_field(name="Description", value=guild.description if guild.description != None else "No description.", inline=True)
         embed.add_field(name="Owner", value=guild.owner, inline=True)
-        embed.add_field(name="Member count", value=str(len(guild.member)), inline=True)
+        embed.add_field(name="Member count", value=str(len(guild.members)), inline=True)
         embed.add_field(name="Emoji count", value=str(len(guild.emojis)), inline=True)
         embed.add_field(name="Region", value=f'{guild.region}', inline=True)
     else:
