@@ -42,10 +42,9 @@ Name: {client.user.name}""")
 async def on_member_join(member):
     print(f'[INFO] {member} joined. ({member.id})')
     channel=client.get_channel(welcome_id)
-    Guild=get_guild(guild_id)
-    role=Guild.get_role(656177104861528064)
+    role=discord.utils.get(member.guild.roles, id=656177104861528064)
     await channel.send(f"<@!{member.id}> <:NATSUKISPARKLE:656602806974808074> Welcome to __**SnomMania!**__ <:OwO:656758711444045835>")
-    await client.add_roles(member, role)
+    await member.add_roles(role, reason="New user")
 
 @client.event
 async def on_member_remove(member):
