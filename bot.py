@@ -92,21 +92,18 @@ async def ping(ctx):
 
 @client.command(brief="Say 'Hi' to the Snom.", usage="No arguments required.")
 async def hi(ctx):
-  """
-  Say 'Hi' to the Snom.
-  This command send random sentence from the database.
-  """
-  sentences=['OwO',
-  'UwU',
-  ":3",
-  "^_^",
-  '*Hiii!*',
-  "<@!401686680580521984> patate",
-  "am bean baby .3.",
-  "hewo gimme cuwy"]
-  chosed_sentence=random.choice(sentences)
-  print(f"[INFO][COMMAND]'hi' command by {ctx.message.author.name}. Chosen sentence: '{chosed_sentence}'")
-  await ctx.send(chosed_sentence)
+    """
+    Say 'Hi' to the Snom.
+    This command send random sentence from the database.
+    """
+    sentences=[]
+    with open('hi_sentences.txt', 'r') as f:
+        for line in f:
+            sentences.append(line.rstrip())
+        
+    chosed_sentence=random.choice(sentences)
+    print(f"[INFO][COMMAND]'hi' command by {ctx.message.author.name}. Chosen sentence: '{chosed_sentence}'")
+    await ctx.send(chosed_sentence)
 
 @client.command(name="python", brief="[DEV]The Snom will execute Python commands!", usage="Arguments:\n<cmd>: any Python command\nBeing the developer is required! :)")
 async def remote_command(ctx, *,cmd=None):
