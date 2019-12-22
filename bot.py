@@ -162,15 +162,12 @@ async def naughty(ctx):
     print(f"[INFO][COMMAND]{ctx.message.author.name} tried to tempt the Snom: >:[")
     await ctx.send("<:ANGWYSNOM:656753233968234516> The Snom is __**Christian**__ :cross: ")
 
-@client.command(brief="Make the Snom say something.", usage="Arguments:\n<id=None>: If passed, it'll send the message to a channel in the current guild.\n<*, say>: The thing you want to say")
-async def say(ctx, id=None, *,say):
+@client.command(brief="Make the Snom say something.", usage="Arguments:\n<*, say>: The thing you want to say")
+async def say(ctx, *,say):
     """
     Make the Snom say something
     Also it's indirect an use of Administrator role.
     """
-    if id != None:
-        channel=client.get_channel(id)
-        await channel.send(say)
     await ctx.send(say)
 
 @client.command(name="stop", brief="[DEV]This completely stop the bot.", usage="No argument required but being the developer is required :)")
