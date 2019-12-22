@@ -114,12 +114,14 @@ async def guild(ctx, attribute=None):
     if attribute is None:
         embed.set_thumbnail(url=str(guild.icon_url))
         embed.add_field(name="Name", value=guild.name, inline=True)
-        embed.add_field(name="Description", value=guild.description, inline=True)
-        embed.add_field(name="Owner", value=guild.owner.name, inline=True)
-        embed.add_field(name="Member count", value=str(guild.member_cout), inline=True)
+        embed.add_field(name="Description", value=guild.description if guild.description != None else "No description.", inline=True)
+        embed.add_field(name="Owner", value=guild.owner, inline=True)
+        embed.add_field(name="Member count", value=str(len(guild.member)), inline=True)
+        embed.add_field(name="Emoji count", value=str(len(guild.emojis)), inline=True)
         embed.add_field(name="Region", value=f'{guild.region}', inline=True)
     else:
         exec(f"embed.add_field(name=\"{attribute}\", value=str(guild.{attribute}), inline=True)")
+    print(f"[INFO][COMMAND]Guild by {ctx.message.author.name}. ".join("No attribute passed, sending defaults." if attribute is None else f"Searching guild attribute: {attribute}"))
     await ctx.send(embed=embed)
 
 @client.command(name="stop", brief="[DEV]This completely stop the bot.")
