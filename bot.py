@@ -5,28 +5,34 @@ import random
 from math import *
 from webserver import keep_alive
 import os
+import json
 
+with open('package.json', 'r') as f:
+    bot_json=json.load(f)
+with open('properties.json', 'r') as f:
+    botProp=json.load(f)
 
-client = commands.Bot(command_prefix=".s ", owner_id=332082083604463616)
+client = commands.Bot(command_prefix=".s ", owner_id=botProp['owner'])
 
 client.remove_command('help')
-guild_id=656176795128692736
-welcome_id=656176795128692739
-bot_chnl_id=658069670469042206
+guild_id=botProp['guildid']
+welcome_id=botProp['welcome']
+bot_chnl_id=botProp['botchannel']
 
 
 @client.event
 async def on_ready():
     await client.change_presence(status=discord.Status.dnd, activity=discord.Game("on_ready()"))
-    print("[INFO] On.")
-    print(f"""
-    [INFO] Bot info:
-    User ID: {client.user.id}
-    Name: {client.user.name}
-    """)
+    print(f"[INFO] On.\nVersion: {bot_json['version']}")
+    await client.change_presence(status=discord.Status.dnd, activity=discord.Game("[INFO]ON"))
+    print(f"""[INFO] Bot info:
+Application name: {bot_json['name']}
+Version: {bot_json['version']}
+User ID: {client.user.id}
+Name: {client.user.name}""")
     await client.change_presence(status=discord.Status.idle, activity=discord.Game("Connected."))
     channel=client.get_channel(bot_chnl_id)
-    await channel.send("The Snom is connected! <:NATSUKISPARKLE:656602806974808074>")
+    await channel.send(f"The Snom is connected! <:NATSUKISPARKLE:656602806974808074>\n*SnomBot {bot_json['version']}*")
     await client.change_presence(status=discord.Status.online, activity=discord.Game("with snow UwU."))
 
 @client.event
@@ -46,7 +52,7 @@ async def help(ctx, cmd=None):
     embed=discord.Embed(colour=discord.Colour(0xbfcdff), title="Help", description="Here's the list of available commands.")
     for command in ctx.bot.commands:
         embed.add_field(name=f"{command}", value=f"{command.brief}", inline=True)
-    embed.set_footer(text=f"The command prefix is {client.command_prefix}")
+    embed.set_footer(text=f"The command prefix is {client.command_prefix}\nSnomBot {bot_json['version']}")
     await ctx.send(embed=embed)
 
 @client.command(brief="Ask the ping, and the Snom will pong! (in ms)")
@@ -122,8 +128,15 @@ async def guild(ctx, attribute=None):
         embed.add_field(name="Region", value=f'{guild.region}', inline=True)
     else:
         exec(f"embed.add_field(name=\"{attribute}\", value=str(guild.{attribute}), inline=True)")
+    embed.set_footer(text=f"SnomBot {bot_json['version']}")
     print(f"[INFO][COMMAND]Guild by {ctx.message.author.name}. ".join("No attribute passed, sending defaults." if attribute is None else f"Searching guild attribute: {attribute}"))
     await ctx.send(embed=embed)
+
+@client.command(name=["lewd, nsfw, porn, dickpic, send_nudes"], brief="Do not do it! <:ANGWYSNOM:656753233968234516>")
+async def naughty(ctx):
+    print(f"{ctx.message.author.name} tried to tempt the Snom: >:[")
+    await ctx.send("<:ANGWYSNOM:656753233968234516> The Snom is __**Christian**__ :cross: ")
+
 
 @client.command(name="stop", brief="[DEV]This completely stop the bot.")
 async def stop_bot(ctx):
@@ -133,6 +146,8 @@ async def stop_bot(ctx):
     """
     if ctx.message.author.id == client.owner_id:
         await ctx.send("The Snom is going to sleep.")
+        await client.change_presence(status=discord.Status.dnd, activity=discord.Game("Stopping"))
+        await client.change_presence(status=discord.Status.offline)
         await client.close()
     else:
         await ctx.send("You are not the developer! Intruder! <:ANGWYSNOM:656753233968234516>")
@@ -143,4 +158,4 @@ async def stop_bot(ctx):
 
 
 keep_alive()
-client.run('NjU2OTM3NTU3MDk0ODI2MDE0.Xf5D4w.V-2bH2v5h5ab4B67bHkgBuLz_Yo')
+client.run(botProp['token'])

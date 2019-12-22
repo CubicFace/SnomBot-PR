@@ -1,6 +1,6 @@
 {
   "name": "snombot-host",
-  "version": "1.0.0.1",
+  "version": "1.0.0.2",
   "description": "",
   "main": "bot.py",
   "scripts": {
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/CubicFace/SnomBot-Host.git"
   },
-  "author": "",
+  "author": "Gradient",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/CubicFace/SnomBot-Host/issues"
