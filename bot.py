@@ -14,6 +14,7 @@ guild_id=656176795128692736
 welcome_id=656176795128692739
 bot_chnl_id=658069670469042206
 
+
 @client.event
 async def on_ready():
     print("[INFO] On.")
@@ -22,8 +23,10 @@ async def on_ready():
     User ID: {client.user.id}
     Name: {client.user.name}
     """)
+    await client.change_presence(status=discord.Status.idle, activity=discord.Game("Connected."))
     channel=client.get_channel(bot_chnl_id)
     await channel.send("The Snom is connected! <:NATSUKISPARKLE:656602806974808074>")
+    await client.change_presence(status=discord.Status.idle, activity=discord.Game("with snow UwU."))
 
 @client.event
 async def on_member_join(member):
@@ -101,7 +104,23 @@ async def waffle(ctx):
     No arguments required.
     """
     image=discord.File(fp=f"wafflePics/waffle{random.randint(0,10)}.jpg")
+    print(f"[INFO][COMMAND]Waffle by {ctx.message.author.name}.")
     await ctx.send(":waffle:",file=image)
+
+@client.command(brief="The Snom knows a little bit about the server <:OwO:656758711444045835>")
+async def guild(ctx, attribute=None):
+    guild=client.get_guild(guild_id)
+    embed=discord.Embed(coulour=discord.Colour(0x96fffc), title="Guild/server status", description="Here's what the Snom knows about the guild <:NATSUKISPARKLE:656602806974808074>")
+    if attribute is None:
+        embed.set_thumbnail(url=str(guild.icon_url))
+        embed.add_field(name="Name", value=guild.name, inline=True)
+        embed.add_field(name="Description", value=guild.description, inline=True)
+        embed.add_field(name="Owner", value=guild.owner.name, inline=True)
+        embed.add_field(name="Member count", value=str(guild.member_cout), inline=True)
+        embed.add_field(name="Region", value=f'{guild.region}', inline=True)
+    else:
+        exec(f"embed.add_field(name=\"{attribute}\", value=str(guild.{attribute}), inline=True)")
+    await ctx.send(embed=embed)
 
 @client.command(name="stop", brief="[DEV]This completely stop the bot.")
 async def stop_bot(ctx):
