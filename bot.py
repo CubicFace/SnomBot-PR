@@ -132,7 +132,7 @@ async def guild(ctx, attribute=None):
     print(f"[INFO][COMMAND]Guild by {ctx.message.author.name}. ".join("No attribute passed, sending defaults." if attribute is None else f"Searching guild attribute: {attribute}"))
     await ctx.send(embed=embed)
 
-@client.command(name=["lewd", "nsfw", "porn", "dickpic", "send_nudes"], brief="Do not do it! <:ANGWYSNOM:656753233968234516>")
+@client.command(name="dickpic", "send_nudes", brief="Do not do it! <:ANGWYSNOM:656753233968234516>")
 async def naughty(ctx):
     print(f"{ctx.message.author.name} tried to tempt the Snom: >:[")
     await ctx.send("<:ANGWYSNOM:656753233968234516> The Snom is __**Christian**__ :cross: ")
