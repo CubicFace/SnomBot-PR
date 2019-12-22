@@ -47,17 +47,28 @@ async def on_member_remove(member):
     channel=client.get_channel(welcome_id)
     await channel.send(f'{member} left the server... <:ZEROTWOCRY:656860514902867988>')
 
+
 @client.command(name="help", brief="The Snom is here to help.")
 async def help(ctx, cmd=None):
     if cmd is None:
+        print(f"[INFO][COMMAND]Help by {ctx.author.name}. Command argument not passed. Sending list of available commands.")
         embed=discord.Embed(colour=discord.Colour(0xbfcdff), title="Help", description="Here's the list of available commands.")
         for command in ctx.bot.commands:
             embed.add_field(name=f"{command}", value=f"{command.brief}", inline=True)
+        embed.set_footer(text=f"The command prefix is {client.command_prefix}\nSnomBot {bot_json['version']}")
+
     else:
-        command_obj=ctx.bot.commands.command({cmd})
-        embed=discord.Embed(colour=discord.Colour(0xbfcdff), title=f"Command help: {cmd}", description=f"{command_obj.help}")
-        embed.add_field(name="Usage", value=command_obj.usage, inline=True)
-    embed.set_footer(text=f"The command prefix is {client.command_prefix}\nSnomBot {bot_json['version']}")
+        foundCommand=False
+        for command in ctx.bot.commands:
+            if str(command).upper() == cmd.upper():
+                foundCommand=True
+                print(f"[INFO][COMMAND]Help by {ctx.author.name}. Command argument passed. Sending ")
+                embed=discord.Embed(colour=discord.Colour(0xbfcdff), title=f"Command help: {cmd}", description=f"{command.help}")
+                embed.add_field(name="Usage", value=command.usage, inline=True)
+                embed.set_footer(text=f"The command prefix is {client.command_prefix}\nSnomBot {bot_json['version']}")
+        if not foundCommand:
+            print(f"[INFO][COMMAND]Help by {ctx.author.name}. Command argument passed. '{cmd}' command not found.")
+            await ctx.send(f"The Snom can't find the command `{cmd}`. Type `.s help` to see the available commands.")
     await ctx.send(embed=embed)
 
 @client.command(brief="Ask the ping, and the Snom will pong!", usage="No arguments required.")
