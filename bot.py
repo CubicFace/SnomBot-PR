@@ -54,8 +54,7 @@ async def help(ctx, cmd=None):
         for command in ctx.bot.commands:
             embed.add_field(name=f"{command}", value=f"{command.brief}", inline=True)
     else:
-        command_obj=None
-        exec(f"command_obj=ctx.bot.commands.{cmd}")
+        command_obj=ctx.bot.commands.command({cmd})
         embed=discord.Embed(colour=discord.Colour(0xbfcdff), title=f"Command help: {cmd}", description=f"{command_obj.help}")
         embed.add_field(name="Usage", value=command_obj.usage, inline=True)
     embed.set_footer(text=f"The command prefix is {client.command_prefix}\nSnomBot {bot_json['version']}")
