@@ -18,6 +18,7 @@ client.remove_command('help')
 guild_id=botProp['guildid']
 welcome_id=botProp['welcome']
 bot_chnl_id=botProp['botchannel']
+log_chnl=botProp['logid']
 
 
 @client.event
@@ -32,7 +33,7 @@ User ID: {client.user.id}
 Name: {client.user.name}""")
     await client.change_presence(status=discord.Status.idle, activity=discord.Game("Connected."))
     
-    channel=client.get_channel(bot_chnl_id)
+    channel=client.get_channel(log_chnl)
     
     await channel.send(f"The Snom is connected! <:NATSUKISPARKLE:656602806974808074>\n*SnomBot {bot_json['version']}*")
     await client.change_presence(status=discord.Status.online, activity=discord.Game("with snow UwU."))
