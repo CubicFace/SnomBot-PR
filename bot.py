@@ -85,7 +85,7 @@ async def help(ctx, cmd=None):
             await ctx.send(f"The Snom can't find the command `{cmd}`. Type `.s help` to see the available commands.")
     await ctx.send(embed=embed)
 
-@client.command(brief="Ask the ping, and the Snom will pong!", usage="No arguments required.")
+@client.command(brief="Ask the ping, and the Snom will pong!", usage="`.s ping`\nNo arguments required.")
 async def ping(ctx):
     """
     Ask the ping, and the Snom will pong!
@@ -94,7 +94,7 @@ async def ping(ctx):
     print(f"[INFO][COMMAND]Ping by {ctx.message.author.name}. Actual bot latency: {client.latency * 1000} ms.")
     await ctx.send(f'The snom has Pong! ({round(client.latency * 1000,2)} ms)')
 
-@client.command(brief="Say 'Hi' to the Snom.", usage="No arguments required.")
+@client.command(brief="Say 'Hi' to the Snom.", usage="`.s hi`\nNo arguments required.")
 async def hi(ctx):
     """
     Say 'Hi' to the Snom.
@@ -109,7 +109,7 @@ async def hi(ctx):
     print(f"[INFO][COMMAND]'hi' command by {ctx.message.author.name}. Chosen sentence: '{chosed_sentence}'")
     await ctx.send(chosed_sentence)
 
-@client.command(name="python", brief="[DEV]The Snom will execute Python commands!", usage="Arguments:\n<cmd>: any Python command\nBeing the developer is required! :)")
+@client.command(name="python", brief="[DEV]The Snom will execute Python commands!", usage="`.s python <cmd>`\nArguments:\n<cmd>: any Python command\nBeing the developer is required! :)")
 async def remote_command(ctx, *,cmd=None):
     """
     The Snom will execute Python commands!
@@ -128,7 +128,7 @@ async def remote_command(ctx, *,cmd=None):
     else:
         await ctx.send("You are not the developer! Intruder! <:ANGWYSNOM:656753233968234516>")
 
-@client.command(brief="Yummy waffles...", usage="No arguments required.")
+@client.command(brief="Yummy waffles...", usage="`.s waffle`\nNo arguments required.")
 async def waffle(ctx):
     """
     Yummy waffles...
@@ -138,7 +138,7 @@ async def waffle(ctx):
     print(f"[INFO][COMMAND]Waffle by {ctx.message.author.name}.")
     await ctx.send(":waffle:",file=image)
 
-@client.command(brief="The Snom knows a little bit about the server <:OwO:656758711444045835>", usage="Arguments:\n<attribute=None> To pass this argument, you need to provide a Discord API Guild attribute name to get the related info, else it'll retrun a bunch of default infos.")
+@client.command(brief="The Snom knows a little bit about the server <:OwO:656758711444045835>", usage="`.s guild <attribute=None>`\nArguments:\n<attribute=None> To pass this argument, you need to provide a Discord API Guild attribute name to get the related info, else it'll retrun a bunch of default infos.")
 async def guild(ctx, attribute=None):
     """
     The Snom knows a little bit about the server <:OwO:656758711444045835>
@@ -169,7 +169,7 @@ async def naughty(ctx):
     print(f"[INFO][COMMAND]{ctx.message.author.name} tried to tempt the Snom: >:[")
     await ctx.send("<:ANGWYSNOM:656753233968234516> The Snom is __**Christian**__ :cross: ")
 
-@client.command(brief="Make the Snom say something.", usage="Arguments:\n<*, say>: The thing you want to say")
+@client.command(brief="Make the Snom say something.", usage="`.s say <*,say>`\nArguments:\n<*, say>: The thing you want to say")
 async def say(ctx, *,say):
     """
     Make the Snom say something
@@ -177,7 +177,7 @@ async def say(ctx, *,say):
     """
     await ctx.send(say)
 
-@client.command(brief="Suggest anything, and the Snom will say it louder in a more important channel.", usage="Arguments:\n<sgtype=server>: Choose wich type of suggestion you want to send. Types are: server, bot, bot_feature, role, channel, emote.\n<*,suggestion>: The content of your suggestion.\nNote: For emote suggestion you need to attach a file and write your suggestion text anyways, otherwise it won't work.")
+@client.command(brief="Suggest anything, and the Snom will say it louder in a more important channel.", usage="`.s suggest <type=server> <*,suggestion>`\nArguments:\n<sgtype=server>: Choose wich type of suggestion you want to send. Types are: server, bot, bot_feature, role, channel, emote.\n<*,suggestion>: The content of your suggestion.\nNote: For emote suggestion you need to attach a file and write your suggestion text anyways, otherwise it won't work.")
 async def suggest(ctx, sgtype: str="server",*,suggestion):
     """
     Suggest anything, and the Snom will say it louder in a more important channel.
@@ -223,8 +223,45 @@ async def suggest(ctx, sgtype: str="server",*,suggestion):
         print(f"[INFO][COMMAND]Suggestion by {ctx.author.name}. Wrong '{sgtype}' type.")
         await ctx.send(f"The Snom can't suggest a {sgtype}")
 
-@client.command(aliases=["shout"], brief="[ADMIN]Let the snom shout something in the news!")
-async def notice()
+@client.command(aliases=["shout"], brief="[ADMIN]Let the Snom shout something in the news!", usage="Being an Administrator is required.\n`.s notice <level> <target> <*,msg>`\nArguments:\n<level>: Level of mention\n0: prints `[INFO]`\n1: make an `@here` ping\n2: make an `@everyone` ping\n<target>: Where you want the bot to shout\nserver: sent in <#!656377626667253769>\nbot: sent in <#!658405098258432000>\n<*,msg>: the content of your shout.")
+@commands.has_permissions(administrator=True)
+async def notice(ctx, level, target, *,msg):
+    """
+    Let the Snom shout something in the news!
+    Need to let everyone know something in a cool way? <:SNIPPITYSNAPSUICIDEINTHESNACC:656962832914710548>
+    The Snom will shout it either in <#!656377626667253769> or in <#!658405098258432000> 
+    """
+    leveled=False
+    targeted=False
+    if level == 0:
+        leveled=True
+        str_msg="[INFO]"
+    elif level == 1:
+        leveled=True
+        str_msg="@here "
+    elif level == 2:
+        leveled=True
+        str_msg="@everyone "
+    
+    if target.upper() == 'SERVER':
+        targeted=True
+        channel=client.get_channel(news_chnl)
+        embed=discord.Embed(colour=discord.Colour(0xff0000), title="Server update", description=msg)
+    elif target.upper() == 'BOT':
+        targeted=True
+        channel=client.get_channel(log_chnl)
+        embed=discord.Embed(colour=discord.Colour(0xa200ff), title="Bot update", description=msg)
+    
+    if targeted and leveled:
+        embed.set_thumbnail(url=str(ctx.message.author.avatar_url))
+        embed.set_footer(text=f"SnomBot {bot_json['version']}")
+        await channel.send(f"{str_msg} {ctx.author.mention} shouted:", embed=embed)
+    else:
+        await ctx.send("Something is missing.")
+@notice.error
+async def notice_error(error, ctx):
+    if isinstance(error, commands.CheckFailure):
+        await ctx.send("You are not an administrator! <:ANGWYSNOM:656753233968234516>")
 
 @client.command(name="stop", brief="[DEV]This completely stop the bot.", usage="No argument required but being the developer is required :)")
 async def stop_bot(ctx):
