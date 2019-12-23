@@ -199,7 +199,7 @@ async def suggest(ctx, sgtype: str="server",*,suggestion):
     elif sgtype.upper() == "EMOTE":
         known_type=True
         embed=discord.Embed(colour=discord.Colour(0xff7147), title="Emote suggestion", description=suggestion)
-        embed.set_image(str(ctx.message.attachments[1].url))
+        embed.set_image(url=str(ctx.message.attachments[1].url))
         channel=client.get_channel(emote_idea)
     elif sgtype.upper() == "CHANNEL":
         known_type=True
