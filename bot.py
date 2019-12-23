@@ -231,33 +231,23 @@ async def notice(ctx, level, target, *,msg):
     Need to let everyone know something in a cool way? <:SNIPPITYSNAPSUICIDEINTHESNACC:656962832914710548>
     The Snom will shout it either in <#656377626667253769> or in <#658405098258432000> 
     """
-    leveled=False
-    targeted=False
-    if level == 0:
-        leveled=True
+    if int(level) == 0:
         str_msg="[INFO]"
-    elif level == 1:
-        leveled=True
+    elif int(level) == 1:
         str_msg="@here "
-    elif level == 2:
-        leveled=True
+    elif int(level) == 2:
         str_msg="@everyone "
     
-    if target.upper() == 'SERVER':
-        targeted=True
+    if str(target).upper() == 'SERVER':
         channel=client.get_channel(news_chnl)
         embed=discord.Embed(colour=discord.Colour(0xff0000), title="Server update", description=msg)
-    elif target.upper() == 'BOT':
-        targeted=True
+    elif str(target).upper() == 'BOT':
         channel=client.get_channel(log_chnl)
         embed=discord.Embed(colour=discord.Colour(0xa200ff), title="Bot update", description=msg)
     
-    if targeted and leveled:
-        embed.set_thumbnail(url=str(ctx.message.author.avatar_url))
-        embed.set_footer(text=f"SnomBot {bot_json['version']}")
-        await channel.send(f"{str_msg} {ctx.author.mention} shouted:", embed=embed)
-    else:
-        await ctx.send("Something is missing.")
+    embed.set_thumbnail(url=str(ctx.message.author.avatar_url))
+    embed.set_footer(text=f"SnomBot {bot_json['version']}")
+    await channel.send(f"{str_msg} {ctx.author.mention} shouted:", embed=embed)
 @notice.error
 async def notice_error(error, ctx):
     if isinstance(error, commands.CheckFailure):
