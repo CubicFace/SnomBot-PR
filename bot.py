@@ -19,7 +19,11 @@ guild_id=botProp['guildid']
 welcome_id=botProp['welcome']
 bot_chnl_id=botProp['botchannel']
 log_chnl=botProp['logid']
-
+news_chnl=botProp['newschannel']
+role_request=botProp['rolerequest']
+chnl_request=botProp['channelrequest']
+emote_idea=botProp['emoteidea']
+bot_request=botProp['botrequest']
 
 @client.event
 async def on_ready():
@@ -172,6 +176,51 @@ async def say(ctx, *,say):
     Also it's indirect an use of Administrator role.
     """
     await ctx.send(say)
+
+@client.command(brief="Suggest anything, and the Snom will say it louder in a more important channel.", usage="Arguments:\n<sgtype=server>: Choose wich type of suggestion you want to send. Types are: server, bot, bot_feature, role, channel, emote.\n<*,suggestion>: The content of your suggestion.")
+async def suggest(ctx, sgtype: str="server",*,suggestion):
+    """
+    Suggest anything, and the Snom will say it louder in a more important channel.
+    You can suggest roles, bot features, emotes etc. You can even make a server suggestion, wich is sent by default (in current channel).
+    """
+    known_type=False
+    if sgtype.upper() == "ROLE":
+        known_type=True
+        embed=discord.Embed(colour=discord.Colour(0xff7147), title="Role suggestion", description=suggestion)
+        channel=client.get_channel(role_request)
+    elif sgtype.upper() == "BOT_FEATURE":
+        known_type=True
+        embed=discord.Embed(colour=discord.Colour(0xff7147), title="Bot (feature) suggestion", description=suggestion)
+        channel=client.get_channel(bot_request)
+    elif sgtype.upper() == "BOT":
+        known_type=True
+        embed=discord.Embed(colour=discord.Colour(0xff7147), title="Bot suggestion", description=suggestion)
+        channel=client.get_channel(bot_request)
+    elif sgtype.upper() == "EMOTE":
+        known_type=True
+        embed=discord.Embed(colour=discord.Colour(0xff7147), title="Emote suggestion", description=suggestion)
+        channel=client.get_channel(emote_idea)
+    elif sgtype.upper() == "CHANNEL":
+        known_type=True
+        embed=discord.Embed(colour=discord.Colour(0xff7147), title="Channel suggestion", description=suggestion)
+        channel=client.get_channel(chnl_request)
+    elif sgtype.upper() == "SERVER":
+        known_type=True
+        embed=discord.Embed(colour=discord.Colour(0xff7147), title="Server suggestion", description=suggestion)
+        channel=ctx
+    
+    if known_type:
+        embed.set_author(ctx.message.author.name, icon_url=str(ctx.message.author.avatar_url))
+        embed.set_thumbnail(url=str(ctx.message.author.avatar_url))
+        embed.set_footer(text=f"SnomBot {bot_json['version']}")
+        print(f"[INFO][COMMAND]Suggestion by {ctx.author.name}. Suggested a '{sgtype}': \"{suggestion}\"")
+        sent_msg=await channel.send(f"@here {ctx.author.mention} suggested:", embed=embed)
+        await sent_msg.add_reaction(':white_check_mark:')
+        await sent_msg.add_reaction(':x:')
+    else:
+        print(f"[INFO][COMMAND]Suggestion by {ctx.author.name}. Wrong '{sgtype}' type.")
+        await ctx.send(f"The Snom can't suggest a {sgtype}")
+
 
 @client.command(name="stop", brief="[DEV]This completely stop the bot.", usage="No argument required but being the developer is required :)")
 async def stop_bot(ctx):
