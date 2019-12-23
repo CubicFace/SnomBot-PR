@@ -223,13 +223,13 @@ async def suggest(ctx, sgtype: str="server",*,suggestion):
         print(f"[INFO][COMMAND]Suggestion by {ctx.author.name}. Wrong '{sgtype}' type.")
         await ctx.send(f"The Snom can't suggest a {sgtype}")
 
-@client.command(aliases=["shout"], brief="[ADMIN]Let the Snom shout something in the news!", usage="Being an Administrator is required.\n`.s notice <level> <target> <*,msg>`\nArguments:\n<level>: Level of mention\n0: prints `[INFO]`\n1: make an `@here` ping\n2: make an `@everyone` ping\n<target>: Where you want the bot to shout\nserver: sent in <#!656377626667253769>\nbot: sent in <#!658405098258432000>\n<*,msg>: the content of your shout.")
+@client.command(aliases=["shout"], brief="[ADMIN]Let the Snom shout something in the news!", usage="Being an Administrator is required.\n`.s notice <level> <target> <*,msg>`\nArguments:\n<level>: Level of mention\n0: prints `[INFO]`\n1: make an `@here` ping\n2: make an `@everyone` ping\n<target>: Where you want the bot to shout\nserver: sent in <#656377626667253769>\nbot: sent in <#658405098258432000>\n<*,msg>: the content of your shout.")
 @commands.has_permissions(administrator=True)
 async def notice(ctx, level, target, *,msg):
     """
     Let the Snom shout something in the news!
     Need to let everyone know something in a cool way? <:SNIPPITYSNAPSUICIDEINTHESNACC:656962832914710548>
-    The Snom will shout it either in <#!656377626667253769> or in <#!658405098258432000> 
+    The Snom will shout it either in <#656377626667253769> or in <#658405098258432000> 
     """
     leveled=False
     targeted=False
