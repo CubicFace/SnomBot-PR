@@ -214,8 +214,8 @@ async def suggest(ctx, sgtype: str="server",*,suggestion):
         embed.set_footer(text=f"SnomBot {bot_json['version']}")
         print(f"[INFO][COMMAND]Suggestion by {ctx.author.name}. Suggested a '{sgtype}': \"{suggestion}\"")
         sent_msg=await channel.send(f"@here {ctx.author.mention} suggested:", embed=embed)
-        await sent_msg.add_reaction(':white_check_mark:')
-        await sent_msg.add_reaction(':x:')
+        await sent_msg.add_reaction('✅')
+        await sent_msg.add_reaction('❌')
     else:
         print(f"[INFO][COMMAND]Suggestion by {ctx.author.name}. Wrong '{sgtype}' type.")
         await ctx.send(f"The Snom can't suggest a {sgtype}")

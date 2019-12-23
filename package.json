@@ -1,6 +1,6 @@
 {
   "name": "snombot-host",
-  "version": "1.0.0.7",
+  "version": "1.0.0.8",
   "description": "",
   "main": "bot.py",
   "scripts": {
