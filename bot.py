@@ -210,7 +210,6 @@ async def suggest(ctx, sgtype: str="server",*,suggestion):
         channel=ctx
     
     if known_type:
-        embed.set_author(ctx.message.author.name)
         embed.set_thumbnail(url=str(ctx.message.author.avatar_url))
         embed.set_footer(text=f"SnomBot {bot_json['version']}")
         print(f"[INFO][COMMAND]Suggestion by {ctx.author.name}. Suggested a '{sgtype}': \"{suggestion}\"")
