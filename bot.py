@@ -160,7 +160,7 @@ async def guild(ctx, attribute=None):
     print(f"[INFO][COMMAND]Guild by {ctx.message.author.name}. ".join("No attribute passed, sending defaults." if attribute is None else f"Searching guild attribute: {attribute}"))
     await ctx.send(embed=embed)
 
-@client.command(name="dickpic", brief="Do not do it! <:ANGWYSNOM:656753233968234516>", usage=">:[")
+@client.command(aliases=["dickpic", "nude", "porn", "hentai"], brief="Do not do it! <:ANGWYSNOM:656753233968234516>", usage=">:[")
 async def naughty(ctx):
     """
     Do not do it! <:ANGWYSNOM:656753233968234516>
@@ -177,11 +177,11 @@ async def say(ctx, *,say):
     """
     await ctx.send(say)
 
-@client.command(brief="Suggest anything, and the Snom will say it louder in a more important channel.", usage="Arguments:\n<sgtype=server>: Choose wich type of suggestion you want to send. Types are: server, bot, bot_feature, role, channel, emote.\n<*,suggestion>: The content of your suggestion.")
+@client.command(brief="Suggest anything, and the Snom will say it louder in a more important channel.", usage="Arguments:\n<sgtype=server>: Choose wich type of suggestion you want to send. Types are: server, bot, bot_feature, role, channel, emote.\n<*,suggestion>: The content of your suggestion.\nNote: For emote suggestion you need to attach a file and write your suggestion text anyways, otherwise it won't work.")
 async def suggest(ctx, sgtype: str="server",*,suggestion):
     """
     Suggest anything, and the Snom will say it louder in a more important channel.
-    You can suggest roles, bot features, emotes etc. You can even make a server suggestion, wich is sent by default (in current channel).
+    You can suggest roles, bot features, emotes etc.
     """
     known_type=False
     if sgtype.upper() == "ROLE":
@@ -223,6 +223,8 @@ async def suggest(ctx, sgtype: str="server",*,suggestion):
         print(f"[INFO][COMMAND]Suggestion by {ctx.author.name}. Wrong '{sgtype}' type.")
         await ctx.send(f"The Snom can't suggest a {sgtype}")
 
+@client.command(aliases=["shout"], brief="[ADMIN]Let the snom shout something in the news!")
+async def notice()
 
 @client.command(name="stop", brief="[DEV]This completely stop the bot.", usage="No argument required but being the developer is required :)")
 async def stop_bot(ctx):
