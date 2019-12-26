@@ -128,6 +128,8 @@ async def help(ctx, cmd=None):
         embed.set_footer(text=f"The command prefix is {client.command_prefix}\nSnomBot {bot_json['version']}") # Signature footer
         ##
 
+        await ctx.send(embed=embed) # Send message
+
     else: # If passed
         
         foundCommand=False # Boolean created to ensure that the command exist
@@ -352,6 +354,9 @@ async def suggest(ctx, sgtype: str="server",*,suggestion):
         
         sent_msg=await channel.send(f"@here {ctx.author.mention} suggested:", embed=embed) # Sending message and sotring it into a variable
         
+        if channel != ctx:
+            await ctx.send(f"Your suggestion has been sent. Check <#{channel.id}>")
+        
         ## Unicode emojis
         check_emoji='\N{WHITE HEAVY CHECK MARK}' 
         x_emoji='\N{CROSS MARK}'
@@ -362,6 +367,8 @@ async def suggest(ctx, sgtype: str="server",*,suggestion):
         
         await sent_msg.add_reaction(x_emoji)
         ##
+
+        await channel.send("⬆️Vote with the reacions above.⬆️")
     
     else: # If the type is unknown
         
