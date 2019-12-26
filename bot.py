@@ -34,10 +34,6 @@ with open('properties.json', 'r') as f: # Contains ids
     botProp=json.load(f)
 #####
 
-##### Checking if updated
-updated=botProp['updated']
-#####
-
 ##### Setting Bot instance
 client = commands.Bot(command_prefix=".s ", owner_id=botProp['owner'])
 #####
