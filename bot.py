@@ -128,7 +128,8 @@ async def help(ctx, cmd=None):
         embed.set_footer(text=f"The command prefix is {client.command_prefix}\nSnomBot {bot_json['version']}") # Signature footer
         ##
 
-        await ctx.send(embed=embed) # Send message
+        await ctx.send("The list of commands has been sent to your direct messages.")
+        await ctx.message.author.send("Here are your commands, have fun.\n*Note: some commands must be sent in the server to work.*", embed=embed) # Send message
 
     else: # If passed
         

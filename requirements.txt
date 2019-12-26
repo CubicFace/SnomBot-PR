@@ -1,4 +1,3 @@
 discord.py[voice]
 flask
 python-dotenv
-google_images_download
