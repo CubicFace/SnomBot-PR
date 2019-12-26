@@ -67,10 +67,7 @@ Name: {client.user.name}""") # Logs some bot info.
     await client.change_presence(status=discord.Status.idle, activity=discord.Game("Connected.")) # Changing status to idle
     
     channel=client.get_channel(log_chnl) # Selects bot logs channel
-    if updated:
-        await channel.send(f"The Snom is connected! <:NATSUKISPARKLE:656602806974808074>\nAnd is __updated!__\n`SnomBot {bot_json['version']}`") # Send connection message to that channel
-    else:
-        await channel.send(f"The Snom is connected! <:NATSUKISPARKLE:656602806974808074>\n`SnomBot {bot_json['version']}`") # Send connection message to that channel
+    await channel.send(f"The Snom is connected! <:NATSUKISPARKLE:656602806974808074>\n`SnomBot {bot_json['version']}`") # Send connection message to that channel
     
     await client.change_presence(status=discord.Status.online, activity=discord.Game("with snow UwU.")) # Changing status to connected and displaying 'Playing with snow UwU'
 ###########
