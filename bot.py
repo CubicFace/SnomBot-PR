@@ -24,7 +24,7 @@ import logging # Display log
 ##
 
 ## Logging setup
-logging.basicConfig(format="[%(levelname)s][%(funcName)s at line %(lineno)d of %(filename)d]: %(message)s", level=logging.ERROR)
+logging.basicConfig(format="[%(levelname)s][%(funcName)s]: %(message)s", level=logging.DEBUG)
 console = logging.StreamHandler()
 console.setLevel(logging.ERROR)
 logging.getLogger().addHandler(console)
