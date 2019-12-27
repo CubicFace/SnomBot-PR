@@ -47,6 +47,7 @@ client.remove_command('help') # Remove help command to redefine it
 logging.info("Removed default 'help' command.")
 
 guild_id=botProp['guildid'] # Server id
+guildid=guild_id
 logging.info("guild_id/int <- guildid/number")
 
 welcome_id=botProp['welcome'] # Welcome channel id
