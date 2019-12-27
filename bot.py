@@ -35,10 +35,10 @@ logging.getLogger().addHandler(console)
 ##### Opening JSON files and storing them as dictionnairies variables
 with open('package.json', 'r') as f: # Contains bot version and application (npm) name
     bot_json=json.load(f)
-    logging.info('bot_json/dict <- package.json')
+    print('bot_json/dict <- package.json')
 with open('properties.json', 'r') as f: # Contains ids
     botProp=json.load(f)
-    logging.info('botProp/int <- properties.json')
+    print('botProp/int <- properties.json')
 #####
 
 ##### Setting Bot instance
@@ -47,35 +47,35 @@ client = commands.Bot(command_prefix=".s ", owner_id=botProp['owner'])
 
 ##### Predefining some useful variables
 client.remove_command('help') # Remove help command to redefine it
-logging.info("Removed default 'help' command.")
+print("Removed default 'help' command.")
 
 guild_id=botProp['guildid'] # Server id
 guildid=guild_id
-logging.info("guild_id/int <- guildid/number")
+print("guild_id/int <- guildid/number")
 
 welcome_id=botProp['welcome'] # Welcome channel id
-logging.info("welcome_id <- welcome/number")
+print("welcome_id <- welcome/number")
 
 bot_chnl_id=botProp['botchannel'] # Bot command channel id
-logging.info("bot_chnl/int <- botchannel/number")
+print("bot_chnl/int <- botchannel/number")
 
 log_chnl=botProp['logid'] # Bot logs channel id
-logging.info("log_chnl/int <- logid/number")
+print("log_chnl/int <- logid/number")
 
 news_chnl=botProp['newschannel'] # News channel id
-logging.info("news_chnl/int <- newschannel/number")
+print("news_chnl/int <- newschannel/number")
 
 role_request=botProp['rolerequest'] # Role requests channel id
-logging.info("role_request/int <- rolerequest/number")
+print("role_request/int <- rolerequest/number")
 
 chnl_request=botProp['channelrequest'] # Channel requests channel id
-logging.info("chnl_request/int <- channelrequest/number")
+print("chnl_request/int <- channelrequest/number")
 
 emote_idea=botProp['emoteidea'] # Emote suggestions channel id
-logging.info("emote_idea/int <- emoteidea/number")
+print("emote_idea/int <- emoteidea/number")
 
 bot_request=botProp['botrequest'] # Bot requests channel id
-logging.info("bot_request/int <- botrequest/number")
+print("bot_request/int <- botrequest/number")
 #####
 
 ##### Actions mades when connected to Discord
@@ -83,11 +83,11 @@ logging.info("bot_request/int <- botrequest/number")
 async def on_ready():
     await client.change_presence(status=discord.Status.dnd, activity=discord.Game("on_ready()")) # Changing status to Do Not Disturb
     
-    logging.info(f"[BOT] On.\nVersion: {bot_json['version']}") # Logs that the bot is on
+    print(f"[BOT] On.\nVersion: {bot_json['version']}") # Logs that the bot is on
     
     await client.change_presence(status=discord.Status.dnd, activity=discord.Game("[BOT]ON")) # Changing activity
     
-    logging.info(f"""[BOT] Bot info:
+    print(f"""[BOT] Bot info:
 Application name: {bot_json['name']}
 User ID: {client.user.id}
 Name: {client.user.name}""") # Logs some bot info.
@@ -107,7 +107,7 @@ Name: {client.user.name}""") # Logs some bot info.
 ##### When member joins
 @client.event
 async def on_member_join(member):
-    logging.info(f'[BOT] {member} joined. ({member.id})') # Logs who joined with User ID
+    print(f'[BOT] {member} joined. ({member.id})') # Logs who joined with User ID
     
     
     channel=client.get_channel(welcome_id) # Selecting Welcome channel
@@ -122,7 +122,7 @@ async def on_member_join(member):
 ###### When member leaves 
 @client.event
 async def on_member_remove(member):
-    logging.info(f'[BOT] {member} left. ({member.id})') # Logs who left with User ID
+    print(f'[BOT] {member} left. ({member.id})') # Logs who left with User ID
     
     channel=client.get_channel(welcome_id) # Selecting Welcome channel
     
@@ -145,7 +145,7 @@ async def help(ctx, cmd=None):
     Ask for the list of availabble command or get help on a specific command.
     """
     if cmd is None: # If not passed
-        logging.info(f"[BOT]Help by {ctx.author.name}. Command argument not passed. Sending list of available commands.") # Logs
+        print(f"[BOT]Help by {ctx.author.name}. Command argument not passed. Sending list of available commands.") # Logs
         
         embed=discord.Embed(colour=discord.Colour(0xbfcdff), title="Help", description="Here's the list of available commands.") # Embed creation
         
@@ -168,7 +168,7 @@ async def help(ctx, cmd=None):
                 
                 foundCommand=True # The boolean is true
                 
-                logging.info(f"[BOT]Help by {ctx.author.name}. Command argument passed. Sending ") # Logs
+                print(f"[BOT]Help by {ctx.author.name}. Command argument passed. Sending ") # Logs
                 
                 embed=discord.Embed(colour=discord.Colour(0xbfcdff), title=f"Command help: {cmd}", description=f"{command.help}") # Embed creation
                 
@@ -178,7 +178,7 @@ async def help(ctx, cmd=None):
         
         if not foundCommand: # If the command is not found
             
-            logging.info(f"[BOT]Help by {ctx.author.name}. Command argument passed. '{cmd}' command not found.") # Logs
+            print(f"[BOT]Help by {ctx.author.name}. Command argument passed. '{cmd}' command not found.") # Logs
             
             await ctx.send(f"The Snom can't find the command `{cmd}`. Type `.s help` to see the available commands.") # Sends message to prevent user.
         
@@ -194,7 +194,7 @@ async def ping(ctx):
     It also returns de latency in ms.
     """
     
-    logging.info(f"[BOT]Ping by {ctx.message.author.name}. Actual bot latency: {client.latency * 1000} ms.") # Logs user with bot latency
+    print(f"[BOT]Ping by {ctx.message.author.name}. Actual bot latency: {client.latency * 1000} ms.") # Logs user with bot latency
     
     await ctx.send(f'The snom has Pong! ({round(client.latency * 1000,2)} ms)') # Sends rounded latency to the user
 #####
@@ -217,7 +217,7 @@ async def hi(ctx):
 
     chosed_sentence=random.choice(sentences) # Choosing a random sentence from the list
     
-    logging.info(f"[BOT]'hi' command by {ctx.message.author.name}. Chosen sentence: '{chosed_sentence}'") # Log
+    print(f"[BOT]'hi' command by {ctx.message.author.name}. Chosen sentence: '{chosed_sentence}'") # Log
     
     await ctx.send(chosed_sentence) # Sending chosen sentence
 #####
@@ -238,7 +238,7 @@ async def remote_command(ctx, *,cmd=None):
 ```""") # Sending python output of entered command
             if cmd is None: # If not passed (error handling)
                 
-                logging.warning("[BOT]Python: no command given") # Logs
+                print("[BOT]Python: no command given") # Logs
                 
                 await ctx.send("The Snom can't execute nothing, please give him something to execute.") # Send message to user
         
@@ -250,7 +250,7 @@ async def remote_command(ctx, *,cmd=None):
     
     else: # If not me
         
-        logging.warning(f"[BOT]Python: {ctx.author.name} tried to use command but is not the developper.") # Logs
+        print(f"[BOT]Python: {ctx.author.name} tried to use command but is not the developper.") # Logs
         
         await ctx.send("You are not the developer! Intruder! <:ANGWYSNOM:656753233968234516>") # Send message to user
 #####
@@ -265,7 +265,7 @@ async def waffle(ctx):
     
     image=discord.File(fp=f"wafflePics/waffle{random.randint(0,10)}.jpg") # Open random indexed image file
 
-    logging.info(f"[BOT]Waffle by {ctx.message.author.name}.") # Logs
+    print(f"[BOT]Waffle by {ctx.message.author.name}.") # Logs
 
     await ctx.send(":waffle:",file=image) # Sends image
 #####
@@ -298,7 +298,7 @@ async def guild(ctx, attribute=None):
     
     embed.set_footer(text=f"SnomBot {bot_json['version']}") # Signature footer
     
-    logging.info(f"[BOT]Guild by {ctx.message.author.name}. ".join("No attribute passed, sending defaults." if attribute is None else f"Searching guild attribute: {attribute}")) # Logs
+    print(f"[BOT]Guild by {ctx.message.author.name}. ".join("No attribute passed, sending defaults." if attribute is None else f"Searching guild attribute: {attribute}")) # Logs
     
     await ctx.send(embed=embed) # Send final message
 #####
@@ -311,7 +311,7 @@ async def naughty(ctx):
     The Snom won't like it.
     """
 
-    logging.warning(f"[BOT]{ctx.message.author.name} tried to tempt the Snom: >:[") # Logs
+    print(f"[BOT]{ctx.message.author.name} tried to tempt the Snom: >:[") # Logs
 
     await ctx.send("<:ANGWYSNOM:656753233968234516> The Snom is __**Christian**__ :cross: ") # Send message
 #####
@@ -324,7 +324,7 @@ async def say(ctx, *,say):
     Also it's indirect an use of Administrator role.
     """
 
-    logging.info(f"[BOT]{ctx.author.name} said: '{say}''") # Logs
+    print(f"[BOT]{ctx.author.name} said: '{say}''") # Logs
     
     await ctx.send(say) # Sends what the user entered.
 #####
@@ -379,7 +379,7 @@ async def suggest(ctx, sgtype: str="server",*,suggestion):
         
         embed.set_footer(text=f"SnomBot {bot_json['version']}") # Signature footer
         
-        logging.info(f"[BOT]Suggestion by {ctx.author.name}. Suggested a '{sgtype}': \"{suggestion}\"") # Logs
+        print(f"[BOT]Suggestion by {ctx.author.name}. Suggested a '{sgtype}': \"{suggestion}\"") # Logs
         
         sent_msg=await channel.send(f"@here {ctx.author.mention} suggested:", embed=embed) # Sending message and sotring it into a variable
         
@@ -401,7 +401,7 @@ async def suggest(ctx, sgtype: str="server",*,suggestion):
     
     else: # If the type is unknown
         
-        logging.info(f"[BOT]Suggestion by {ctx.author.name}. Wrong '{sgtype}' type.") # Logs
+        print(f"[BOT]Suggestion by {ctx.author.name}. Wrong '{sgtype}' type.") # Logs
         
         await ctx.send(f"The Snom can't suggest a {sgtype}") # Sends message
 #####
@@ -444,7 +444,7 @@ async def notice(ctx, level, target, *,msg):
     
     embed.set_footer(text=f"SnomBot {bot_json['version']}") # Signature footer
     
-    logging.info(f"[BOT](Admin){target} shout of level {level} by {ctx.message.author.id}: '{msg}'") # Logs
+    print(f"[BOT](Admin){target} shout of level {level} by {ctx.message.author.id}: '{msg}'") # Logs
     
     await channel.send(f"{str_msg} {ctx.author.mention} shouted:", embed=embed) # Sends message in selected channel
 ## If not administrator
@@ -452,7 +452,7 @@ async def notice(ctx, level, target, *,msg):
 async def notice_error(error, ctx):
     if isinstance(error, commands.CheckFailure):
         
-        logging.warning(f"[BOT](Admin){_temp_author} tried to shout but do not have permissions.") # Logs
+        print(f"[BOT](Admin){_temp_author} tried to shout but do not have permissions.") # Logs
         
         await ctx.send("You are not an administrator! <:ANGWYSNOM:656753233968234516>") # Sends message
         
@@ -464,7 +464,7 @@ async def notice_error(error, ctx):
 @client.command(brief="Yare yare daze", usage="`.s menacing <emoji>`\nArguments:\n<emoji>: The emoji you want to be surrounded")
 async def menacing(ctx, emoji):
 
-    logging.info(f"[BOT][COMMANDS]Menacing by {ctx.author.name}. Emoji: '{emoji}'") # Logs
+    print(f"[BOT][COMMANDS]Menacing by {ctx.author.name}. Emoji: '{emoji}'") # Logs
 
     await ctx.send("<:MANASSING:656760045475987476> <:MANASSING:656760045475987476> <:MANASSING:656760045475987476>")
     await ctx.send(f"<:MANASSING:656760045475987476> {emoji} <:MANASSING:656760045475987476>")
