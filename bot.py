@@ -21,6 +21,7 @@ import os # OS Module to get more flexibility in the Linux host (Heroku)
 import json # JSON Module to read and write json files
 import asyncio # for asynchronous command
 import logging # Display log
+from ctypes import util # Searching libraries
 ##
 
 ## Logging setup
@@ -43,6 +44,17 @@ with open('properties.json', 'r') as f: # Contains ids
 
 ##### Setting Bot instance
 client = commands.Bot(command_prefix=".s ", owner_id=botProp['owner'])
+#####
+
+##### Loading cogs
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        client.load_extension(f'cogs.{filename[:-3]}')
+#####
+
+##### Voice setup
+if not discord.opus.is_loaded():
+    discord.opus.load_opus(util.find_library('opus'))
 #####
 
 ##### Predefining some useful variables
@@ -463,6 +475,9 @@ async def notice_error(error, ctx):
 ##### Menacing command
 @client.command(brief="Yare yare daze", usage="`.s menacing <emoji>`\nArguments:\n<emoji>: The emoji you want to be surrounded")
 async def menacing(ctx, emoji):
+    """
+    Yare yare daze
+    """
 
     print(f"[BOT][COMMANDS]Menacing by {ctx.author.name}. Emoji: '{emoji}'") # Logs
 
@@ -471,11 +486,64 @@ async def menacing(ctx, emoji):
     await ctx.send("<:MANASSING:656760045475987476> <:MANASSING:656760045475987476> <:MANASSING:656760045475987476>")
 #####
 
-##### Voice command
-#async def voice(ctx)
+##### Vocal command
+@client.group()
+async def vocal(ctx):
+    if ctx.invoked_subcommand is None:
+        embed=discord.Embed(title="Voice status", description="This message shows because you didn't passed any subcommand, or you passed an invalid argument.")
+        if ctx.voice_client is None:
+            embed.add_field(name="Is connected?", value="No", inline=True)
+        else:
+            embed.add_field(name="Is connected?", value="Yes", inline=True)
+            embed.add_field(name="Voice channel", value=str(ctx.voice_client.channel.name), inline=True)
+            if not ctx.voice_client.is_playing:
+                if ctx.voice_client.paused:
+                    embed.add_field(name="Media status", value="Paused", inline=True)
+                else:
+                    embed.add_field(name="Media status", value="Not playing", inline=True)
+            else:
+                embed.add_field(name="Media status", value="Playing", inline=True)
+
+        embed.set_footer(text=f"SnomBot {bot_json['version']}")
+        await ctx.send(embed=embed)
+@vocal.command() 
+async def join(ctx):
+    voice_channel=ctx.author.voice.channel
+    
+    
+    if voice_channel != None:
+        
+        try:
+            async with ctx.typing():
+                print(f"[BOT]Connecting to voice channel {voice_channel.name} ({voice_channel.id})")
+                await voice_channel.connect()
+            ctx.voice_client.stop()
+            print(f"[BOT]Connected to channel {voice_channel.name} ({voice_channel.id})")
+            await ctx.send(f"The bot is connected to channel {voice_channel.name}.")
+        except commands.errors.CommandInvokeError:
+            await ctx.send("The bot is already connected to a channel.")
+
+
+    else:
+        
+        await ctx.send("You are not connected to a voice channel, please join a voice channel and try again.")
+
+@vocal.command()
+async def leave(ctx):
+
+    if ctx.voice_client != None:
+        async with ctx.typing():
+            print("[BOT]Stopping current media playing.")
+            ctx.voice_client.stop()
+            print("[BOT]Disconnecting from voice channel.")
+            await ctx.voice_client.disconnect(force=True)
+        print("[BOT]Disconnected from voice channel.")
+        await ctx.send("The bot has left the channel.")
+    else:
+        await ctx.send("The bot is not connected to a voice channel.")
 
 ##### Stop command
-@client.command(name="stop", brief="[DEV]This completely stop the bot.", usage="No argument required but being the developer is required :)")
+@client.command(name="close", brief="[DEV]This completely stop the bot.", usage="No argument required but being the developer is required :)")
 async def stop_bot(ctx):
     f"""
     This completely stop the bot.
