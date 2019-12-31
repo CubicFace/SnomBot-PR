@@ -542,6 +542,32 @@ async def leave(ctx):
     else:
         await ctx.send("The bot is not connected to a voice channel.")
 
+##### Dice command
+@client.group()
+async def dice(ctx):
+    if ctx.invoked_subcommand is None:
+        await ctx.send("Wrong subcommand.")
+@dice.command()
+async def single(ctx, number):
+    dice_roll=random.randint(1,number)
+    await ctx.send(dice_roll)
+@dice.command()
+async def double(ctx, number):
+    await ctx.send(random.randint(1, number))
+    await ctx.send(random.randint(1, number))
+@dice.command()
+async def triple(ctx, number):
+    await ctx.send(random.randint(1, number))
+    await ctx.send(random.randint(1, number))
+    await ctx.send(random.randint(1, number))
+@dice.command()
+async def quadruple(ctx, number):
+    await ctx.send(random.randint(1, number))
+    await ctx.send(random.randint(1, number))
+    await ctx.send(random.randint(1, number))
+    await ctx.send(random.randint(1, number))
+#####
+
 ##### Stop command
 @client.command(name="close", brief="[DEV]This completely stop the bot.", usage="No argument required but being the developer is required :)")
 async def stop_bot(ctx):
