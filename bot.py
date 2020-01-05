@@ -124,7 +124,7 @@ async def on_member_join(member):
     
     channel=client.get_channel(welcome_id) # Selecting Welcome channel
     
-    role=member.guild.get_role(guildid) # Selecting role to add
+    role=member.guild.get_role(656177104861528064) # Selecting role to add
     
     sent_msg=await channel.send(f"<@!{member.id}> <:NATSUKISPARKLE:656602806974808074> Welcome to __**SnomMania!**__ <:OwO:656758711444045835>") # Sending message to Welcome channel
 
