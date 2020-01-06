@@ -549,23 +549,23 @@ async def dice(ctx):
         await ctx.send("Wrong subcommand.")
 @dice.command()
 async def single(ctx, number):
-    dice_roll=random.randint(1,number)
+    dice_roll=str(random.randint(1,number))
     await ctx.send(dice_roll)
 @dice.command()
 async def double(ctx, number):
-    await ctx.send(random.randint(1, number))
-    await ctx.send(random.randint(1, number))
+    dice_roll=(random.randint(1,number),random.randint(1,number))
+    for i in dice_roll:
+        await ctx.send(str(i))
 @dice.command()
 async def triple(ctx, number):
-    await ctx.send(random.randint(1, number))
-    await ctx.send(random.randint(1, number))
-    await ctx.send(random.randint(1, number))
+    dice_roll=(random.randint(1,number),random.randint(1,number),random.randint(1,number))
+    for i in dice_roll:
+        await ctx.send(str(i))
 @dice.command()
 async def quadruple(ctx, number):
-    await ctx.send(random.randint(1, number))
-    await ctx.send(random.randint(1, number))
-    await ctx.send(random.randint(1, number))
-    await ctx.send(random.randint(1, number))
+    dice_roll=(random.randint(1,number),random.randint(1,number),random.randint(1,number), random.randint(1,number))
+    for i in dice_roll:
+        await ctx.send(str(i))
 #####
 
 ##### Stop command
