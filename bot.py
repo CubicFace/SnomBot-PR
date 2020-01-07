@@ -470,7 +470,7 @@ async def notice_error(error, ctx):
         
         del _temp_author # Deletes variable
 ##
-#####
+p#####
 
 ##### Menacing command
 @client.command(brief="Yare yare daze", usage="`.s menacing <emoji>`\nArguments:\n<emoji>: The emoji you want to be surrounded")
@@ -567,6 +567,18 @@ async def quadruple(ctx, number:int):
     for i in dice_roll:
         await ctx.send(str(i))
 #####
+
+#####Clear command
+@client.command()
+@commands.has_permissions(manage_messages=True)
+async def clear(ctx, amount=5):
+	await ctx.channel.purge(limit=amount+1)
+@clear.error
+async def clear_error(error, ctx):
+	if isinstance(error, commands.CheckFailure):
+		await ctx.send("You do not have permissions to do that!")
+#####
+
 
 ##### Stop command
 @client.command(name="close", brief="[DEV]This completely stop the bot.", usage="No argument required but being the developer is required :)")
