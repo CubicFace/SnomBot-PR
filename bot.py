@@ -470,7 +470,7 @@ async def notice_error(error, ctx):
         
         del _temp_author # Deletes variable
 ##
-p#####
+#####
 
 ##### Menacing command
 @client.command(brief="Yare yare daze", usage="`.s menacing <emoji>`\nArguments:\n<emoji>: The emoji you want to be surrounded")
